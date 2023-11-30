@@ -36,8 +36,8 @@ def create_user(u_mail: str, username: str, password: str):
     """ This function create a new user in the system, and inserts his name and his id to the 'Users' table in the DB.
     """
     # Checking if email address is valid.
-    flag = is_email_address_valid(u_email=u_mail)
-    if not flag:
+    valid_email = is_email_address_valid(u_email=u_mail)
+    if not valid_email:
         return
 
     # Checking if the email owner already has an account with this email address.
@@ -152,7 +152,6 @@ def login(email: str, password: str):
 
 
 def reset_password(u_email: str):
-
     # Checking if the email entered by the user is valid.
     flag = is_email_address_valid(u_email=u_email)
     if not flag:
@@ -428,25 +427,26 @@ def main():
 
     u_mail = ""
     while True:
-        answer = (input("\nHi, These are your options: login, signup, reset-passwrd, exit\n(type 'login' for login, "
-                        "'sign' for signup, 'reset' for reset and 'exit' for exit - at any time):\n")).lower()
+        user_answer = (
+            input("\nHi, These are your options: login, signup, reset-passwrd, exit\n(type 'login' for login, "
+                  "'sign' for signup, 'reset' for reset and 'exit' for exit - at any time):\n")).lower()
 
         valid = False
-        if answer == "login":
+        if user_answer == "login":
             u_mail = input("Enter your email:  ")
             password = input("Enter your password:  ")
             valid = login(email=u_mail, password=password)
-        elif answer == "sign":
+        elif user_answer == "sign":
             u_mail = input("Enter your email:  ")
             username = input("Choose username:  ")
             password = input("Choose password:  ")
             valid = create_user(u_mail=u_mail, username=username, password=password)
             if valid:
                 print(f"This is your details: (email: {valid[1]}, username: {username}, password: {password})")
-        elif answer == "reset":
+        elif user_answer == "reset":
             u_mail = input("Type your email address: ")
             reset_password(u_email=u_mail)
-        elif answer == "exit":
+        elif user_answer == "exit":
             print("Bye :)")
             return
         else:
@@ -480,7 +480,6 @@ def main():
             return
         else:
             print("Type only valid value.")
-
 
 
 if __name__ == '__main__':
